@@ -1,7 +1,9 @@
--- Checking the table for any errors in data migration via counting
 
--- Query will show number of rides grouped by month 
+-- Question
+-- What is the most popular month for casual and member riders?
+
 SELECT 
+    member_casual AS rider_status,
     EXTRACT(MONTH FROM started_at) AS month_date,
     CASE 
         WHEN EXTRACT(MONTH FROM started_at)::INTEGER = 1 THEN 'January'
@@ -17,10 +19,15 @@ SELECT
         WHEN EXTRACT(MONTH FROM started_at)::INTEGER = 11 THEN 'November'
         ELSE 'December'
     END AS months,
-    COUNT(*)
+    COUNT(ride_id)AS ride_count
 FROM trips_2025
+WHERE   
+    is_system_timeout != TRUE -- Filter out the system docked bikes
+    AND ride_length > 1 -- Filter out redoced after one minute rides
 GROUP BY
-    month_date
+    month_date, member_casual 
 ORDER BY
-    month_date
+    ride_count DESC
 
+-- NOTES
+-- For both casual and member riders the months of June - September do seem to be the most popular for bikeriding

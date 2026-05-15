@@ -92,3 +92,6 @@ FROM 'C:\\Users\\Public\\Downloads\\december_data.csv'
 WITH (FORMAT csv, HEADER true, ENCODING 'UTF8');
 
 TRUNCATE TABLE trips_2025;
+
+ALTER TABLE trips_2025
+RENAME COLUMN memember_casual TO member_casual
