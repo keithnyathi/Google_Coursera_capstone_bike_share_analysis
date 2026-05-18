@@ -29,5 +29,25 @@ GROUP BY
 ORDER BY
     ride_count DESC
 
--- NOTES
--- For both casual and member riders the months of June - September do seem to be the most popular for bikeriding
+
+/*
+   Summary
+  
+ 🔍Methodology & Volume
+    - Filtered out rides exceeding 24 hours (> 1440 minutes) and those rides that had ride length less than 1 minute
+    - Calculated the total rides taken using COUNT() aggregation 
+    - Used CASE statement to create a column containing the names for months of the year
+    - Ordered the results by the ride count
+    - Grouped the results by month and rider status (member or casual)
+ 📊Key Metrics 
+    - For both casual and member riders the months of June - September are the most popular for bike riding 
+
+
+ 💡Data Interpretation & Business Takeaway
+   -- NOTES
+   -- The popularity for bike riding during the months from June to September is because in the US or the Northern hemisphere, these
+       are summer months or warmer months of the year and this makes bike riding much more enjoyable and a popular choice 
+
+*/
+
+

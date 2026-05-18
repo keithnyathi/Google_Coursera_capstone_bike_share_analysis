@@ -12,14 +12,29 @@ SELECT
     member_casual AS rider_type
 FROM trips_2025
 WHERE
-    ride_length >= 1440 -- rides that took more than 24 hrs
+    ride_length > 1440 -- rides that took more than 24 hrs
 GROUP BY
     rider_type -- groupby rider type
 
 
 --NOTES
 /*
- - About 98% of the rides that exceeded 24 hours had NULL end stations and as such are considered to have been locked via a system timeout
-   with most users being casual riders and will be treated as having occured as a result of riders not being familiar with the docking system or failing to dock
+  Summary
+  
+ 🔍Methodology & Volume
+    - Filtered for rides exceeding 24 hours (> 1440 minutes) 
+    - Counted the number of ride logs
+    - Counted all data contained in the end_station_name column
+    - In order to get all rides that exceeded 24 hours with null end_station_name entries 
+    - Grouped the data by rider type
+ 📊Key Metrics 
+    - A total of 5585 rides taken exceeded 24 hours 
+    - 4677 of these rides were done by casual riders
+    - 908 of the rides by annual members
+
+
+ 💡Data Interpretation & Business Takeaway
+   - With most users being casual riders, these rides will be treated as having occured as a result of riders not being familiar with the docking system or failing to dock
    at the end stations 
+   - I perform a more detailes analysis in Python
 */

@@ -14,10 +14,27 @@ WHERE
 GROUP BY
     ride_hour,rider_type
 ORDER BY
-    ride_hour, rider_type
+    total_rides DESC
 
+/*
+   Summary
+  
+ 🔍Methodology & Volume
+    - Filtered out rides exceeding 24 hours (> 1440 minutes) and those rides that had ride length less than 1 minute
+    - Extracted the hour from the started_at column as ride_hour
+    - Filtered for specific hours during the day relevant to the question
+    - Ordered the results by the the number of rides
+ 📊Key Metrics 
+    - Members take more rides during the specific hours (6am - 10am) and (3pm - 8pm) than casual riders
+    - For hours such as 7am, 8 am members take twice as many rides as casual riders
+    - For the hours of (4,5,6 pm), the late hours of the afternoon , members take between 290,000 to almost 400,000 rides while
+      casual riders take between 150,000 to 180,000 rides
 
--- NOTES
--- Increased number of member riders in general compared to casual riders
--- member rider numbers surge during the early hours of going to work (6-9) 
--- and the late hours of returning from work (5-9) when compared to other hours during the day
+ 💡Data Interpretation & Business Takeaway
+   -- There is an increased number of member riders in general compared to casual riders. The surge in bike ride traffic during these hours for 
+       member riders is a result of the riders going and coming from work.
+   -- Casual riders do take rides during those hours as well but the number varies quite a lot in comparison to the members 
+   
+
+*/
+
