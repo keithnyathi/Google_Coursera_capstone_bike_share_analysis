@@ -37,8 +37,8 @@ N.B For station-based analysis, 20% of entries were excluded due to missing stat
       sattions for casual riders and annual members respectively
 
  💡Data Interpretation & Business Takeaway
-  -For the Casual rider , the station "DuSable Lake Shore Dr & Monroe St" is the most popular as 
-     connected to a number of tourist attractions and leisure establishments within the area luring in the casual riders 
+  -For the Casual rider , the station "DuSable Lake Shore Dr & Monroe St" is the most popular station as 
+     it is connected to a number of tourist attractions and leisure establishments within the area luring in the casual riders 
  -For the annual members "Kingsbury St & Kinzie St" is the place to be as it sees quite a number of the members take off from its docking area
      This is likely because it is located right in a dense hub of tech headquarters and transit connections,
      as well as busy office buildings buzzing with workers who commute there daily using the bikes

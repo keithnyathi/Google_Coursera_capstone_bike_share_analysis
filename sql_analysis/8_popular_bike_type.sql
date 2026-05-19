@@ -29,7 +29,7 @@ ORDER BY
 
  💡Data Interpretation & Business Takeaway
    -- For both the members and the casual riders, electric bikes are the most popular mode of transportation likely due to 
-      the ease and convenince of riding of the e-bikes. E-bikes don't require manual pedaling and stamina like classic bikes 
+      the ease and convenience of riding of the e-bikes. E-bikes don't require manual pedalling and stamina like classic bikes 
       and that might lead users to prefer them as a mode of movement
 
 */
