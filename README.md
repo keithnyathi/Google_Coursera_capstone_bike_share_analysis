@@ -46,7 +46,8 @@ To unlock these conversions, this end-to-end case study analyzes **5.7+ million 
     -  In addition to that, I added a much more word based weekday column to make it easier for analysis in the preceeding steps.
     -  Now that i felt like the data made sense for analysis, before moving to SQL, I separated the combined spreadsheets in power query by filtering for the month in the power query source.name column and then saved the spreadsheets for Jan-Dec 2025.
        
-       ![alt text](image.jpg) 
+       ![power query](images/power_query_gif.gif)   
+       *Using Excel's Power Query to clean, sort and add calculations*
         
   - ## Analysis of behavioral disparity using POSTGRESQL via VS CODE
       - In SQL I attempted to give an answer as to how the casual riders and the annual members use Cyclistic bikes differently and simultaneously draw insights from the data that could help in converting casual riders into annual members for the Cyclistic company.
@@ -174,9 +175,11 @@ To unlock these conversions, this end-to-end case study analyzes **5.7+ million 
 
      *💡Data Interpretation & Business Takeaway*  
         - *Although member riders account for the most frequent type of riders from the data provided,casual riders  have the highest average riding time as the riders ride mostly for leisure and annual members ride the bikes most likely as a transport means to and from work or other engagements that may not necessarily need them ride for a long time*
+
+     ![Average Trip Duration](images/average_bike_trip_duration_gif.gif)    
+     *Visualization created in Tableau*
      
-     
-  2. **Which day or days of the week exhibit peak ridership volume when contrasting annual members against casual riders?**
+  3. **Which day or days of the week exhibit peak ridership volume when contrasting annual members against casual riders?**
      
      *🔍Methodology*
      - *Filtered out rides exceeding 24 hours ( > 1440 minutes) and those rides that had ride length less than 1 minute*
@@ -207,8 +210,10 @@ To unlock these conversions, this end-to-end case study analyzes **5.7+ million 
      - *Annual members show an increased and more visible usage of the bikes for days (Mon - Friday) which are work days on the calendar further suggesting that annual members ride the bike as a transport means to and from work or they use the bikes for activities that require repeated attendance during the week*
      - *Casual riders also have a high frequency of bike riding on weekends than the rest of the weekdays, hinting at them using the bikes for leisure related purposes (traveling tourists, one time users, etc)*
      
-
- 3. **How do mean trip durations fluctuate across the days of the week when comparing annual members and casual riders?**   
+      ![Peak Ridership During the Week](images/popular_days_during_week_gif.gif)     
+      *Visualization created in Tableau*
+     
+ 5. **How do mean trip durations fluctuate across the days of the week when comparing annual members and casual riders?**   
 
     *🔍Methodology*
     - *Filtered out rides exceeding 24 hours (> 1440 minutes) and those rides that had ride length less than 1 minute*
@@ -237,9 +242,10 @@ To unlock these conversions, this end-to-end case study analyzes **5.7+ million 
     *💡Data Interpretation & Business Takeaway*    
      - *Since the casual riders have a noticeably higher average ride time , their influence is visible on the average ride time by day of the week, weekends (Sat and Sun) have the highest average ride time due to casual riders riding the most during the weekend because most of the leisure bike riding, city exploration etc is done commonly during the weekends when the users aren't working.*
      - *The notion of riding during the weekends not for work related engagements but for relaxation,exploring,leisure proves true even with annual members as their average ride time also peaks during the weekend when they're likely not working.*
-    
+     ![Average Trip duration during the week](images/weekly_average_trip_duration.gif)
+     *Visualization created in Tableau*
 
-4. **Which customer demographic dominates daily ridership volume?**     
+6. **Which customer demographic dominates daily ridership volume?**     
     *🔍Methodology*
     - *Filtered out rides exceeding 24 hours (> 1440 minutes) and those rides that had ride length less than 1 minute*
     - *Extracted the hour from the started_at column as ride_hour*
@@ -269,8 +275,10 @@ To unlock these conversions, this end-to-end case study analyzes **5.7+ million 
     *💡Data Interpretation & Business Takeaway*
      - *There is an increased number of member riders in general compared to casual riders. The surge in bike ride traffic during these hours for member riders is a result of the riders going and coming from work.*
      - *Casual riders do take rides during those hours as well but the number varies quite a lot in comparison to the members.*
-
-  5. **What are the peak operational months for Cyclistic, segmented by user type?**
+      ![Daily Ridership Volume](images/daily_ridership_volume.gif)   
+      *Visualization created in Tableau*
+       
+  7. **What are the peak operational months for Cyclistic, segmented by user type?**
      
      *🔍Methodology*   
      - *Filtered out rides exceeding 24 hours (> 1440 minutes) and those rides that had ride length less than 1 minute*  
@@ -314,8 +322,11 @@ To unlock these conversions, this end-to-end case study analyzes **5.7+ million 
   
      *💡Data Interpretation & Business Takeaway*
      - *The popularity for bike riding during the months from June to September is because in the US or the Northern hemisphere, these are summer months or warmer months of the year and this makes bike riding much more enjoyable and a popular choice*
+
+       ![Peak Operational Months for Cyclistic](images/peak_operational_months.gif)    
+       *Visualization created in Tableau*
     
-  6. **What is the distribution of fleet preferences across annual members and casual riders?**
+  8. **What is the distribution of fleet preferences across annual members and casual riders?**
 
      *🔍Methodology*
      - *Filtered out rides exceeding 24 hours (> 1440 minutes) and those rides that had ride length less than 1 minute*
@@ -344,8 +355,11 @@ To unlock these conversions, this end-to-end case study analyzes **5.7+ million 
  
      *💡Data Interpretation & Business Takeaway*
      - *For both the members and the casual riders, electric bikes are the most popular mode of transportation likely due to the ease and convenience of riding of the e-bikes. E-bikes don't require manual pedalling and stamina like classic bikes and that might lead users to prefer them as a mode of movement.*
-    
- 7. **Which specific docking stations serve as the primary departure hubs for annual members versus casual riders?**     
+     - 
+     ![Bike Preference](images/bike_type_preference.gif)     
+      *Visualization created in Tableau*
+       
+ 9. **Which specific docking stations serve as the primary departure hubs for annual members versus casual riders?**     
 
      *🔍Methodology*  
       - *Filtered out rides exceeding 24 hours (> 1440 minutes) and those rides that had ride length less than 1 minute*
@@ -378,10 +392,11 @@ To unlock these conversions, this end-to-end case study analyzes **5.7+ million 
     *💡Data Interpretation & Business Takeaway*
      - *For the Casual rider , the station "DuSable Lake Shore Dr & Monroe St" is the most popular station as it is connected to a number of tourist attractions and leisure establishments within the area luring in the casual riders*
     - *For the annual members "Kingsbury St & Kinzie St" is the place to be as it sees quite a number of the members take off from its docking area. This is likely because it is located right in a dense hub of tech headquarters and transit connections, as well as busy office buildings buzzing with workers who commute there daily using the bikes.*
+   
+      ![Station Preference](images/station_preference.gif)
+      *Visualization created in Tableau*
         
-        
-     
-
+      [*For the detailed sql code files, you can find them here*](sql_analysis)
   - ## Data Audit and Quality assurance with Python
   - ## Visualizations in Tableau
  # 📚 What I learned
