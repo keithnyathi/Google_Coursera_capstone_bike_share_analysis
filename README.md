@@ -146,7 +146,13 @@ To unlock these conversions, this end-to-end case study analyzes **5.7+ million 
       
         ```
 ### Analysis
-  1. **Average ride length between casual riders and member riders?**
+
+
+  1. **What is the variance in average trip duration when contrasting annual members against casual riders?**   
+      *🔍Methodology*
+      - *Filtered out rides exceeding 24 hours (> 1440 minutes) and those rides that had ride length less than 1 minute*
+      - *Calculated the average ride length grouped by member type*
+      - *Ordered the results by the average ride length*
       ```sql
       SELECT
       ROUND(AVG(ride_length),2) AS average_ride_length,
@@ -164,11 +170,218 @@ To unlock these conversions, this end-to-end case study analyzes **5.7+ million 
           average_ride_length DESC
         ```
      *📊Key Metrics*  
-         *Casual members on average ride for longer times (19.93 minutes) when compared to annual members who ride at an average of 12,19 minutes*
+        - *Casual members on average ride for longer times (19.93 minutes) when compared to annual members who ride at an average of 12,19 minutes*
 
      *💡Data Interpretation & Business Takeaway*  
-         *Although member riders account for the most frequent type of riders from the data provided,casual riders  have the highest average riding time as the riders ride mostly for leisure and annual members ride the bikes most likely as a transport means to and from work or other engagements that may not necessarily need them ride for a long time*
+        - *Although member riders account for the most frequent type of riders from the data provided,casual riders  have the highest average riding time as the riders ride mostly for leisure and annual members ride the bikes most likely as a transport means to and from work or other engagements that may not necessarily need them ride for a long time*
+     
+     
+  2. **Which day or days of the week exhibit peak ridership volume when contrasting annual members against casual riders?**
+     
+     *🔍Methodology*
+     - *Filtered out rides exceeding 24 hours ( > 1440 minutes) and those rides that had ride length less than 1 minute*
+     - *Calculated using aggregation method COUNT, the number of rides taken during the 7 days of the week.*
+     - *Grouped the results by day of the week and the rider type(member or casual)*
+     - *Ordered the results by the number of rides with the most rides first going down*
+     
+     ```sql
+      SELECT
+        COUNT(ride_id) AS number_of_rides,
+        weekday,
+        member_casual
+       FROM trips_2025
+       WHERE
+           is_system_timeout != TRUE
+           AND ride_length > 1
+       GROUP BY
+           weekday,
+           member_casual
+       ORDER BY
+           number_of_rides DESC
+      ```
+     *📊Key Metrics*   
+     - *The query shows that for annual members Mondays to Fridays are the days that see the highest volume of bike traffic
+      When it comes to the casual riders, weekends (Saturday and Sunday) are the days with the most bike traffic*
+
+     *💡Data Interpretation & Business Takeaway*  
+     - *Annual members show an increased and more visible usage of the bikes for days (Mon - Friday) which are work days on the calendar further suggesting that annual members ride the bike as a transport means to and from work or they use the bikes for activities that require repeated attendance during the week*
+     - *Casual riders also have a high frequency of bike riding on weekends than the rest of the weekdays, hinting at them using the bikes for leisure related purposes (traveling tourists, one time users, etc)*
+     
+
+ 3. **How do mean trip durations fluctuate across the days of the week when comparing annual members and casual riders?**   
+
+    *🔍Methodology*
+    - *Filtered out rides exceeding 24 hours (> 1440 minutes) and those rides that had ride length less than 1 minute*
+    - *Calculated the average ride length grouped by member type and weekday*
+    - *Ordered the results by the average ride length in descending order*
     
+    ```sql
+    SELECT
+    ROUND(AVG(ride_length),2) AS Average_ride_time,
+    weekday,
+    member_casual AS rider_type
+    FROM trips_2025
+    WHERE
+        is_system_timeout != TRUE
+        AND ride_length > 1
+    GROUP BY
+        weekday,
+        member_casual
+    ORDER BY
+        Average_ride_time DESC
+    ```
+    *📊Key Metrics*   
+    - *Casual riders have higher average riding times during the entire 7 days of the week, however Saturday and Sunday are the days where they ride longest in comparison to the rest of the week*
+    - *Annual members take up the bottom 7 positions as they don't ride as long on average, for members as well Saturday and Sunday are the days when they ride longest*
+
+    *💡Data Interpretation & Business Takeaway*    
+     - *Since the casual riders have a noticeably higher average ride time , their influence is visible on the average ride time by day of the week, weekends (Sat and Sun) have the highest average ride time due to casual riders riding the most during the weekend because most of the leisure bike riding, city exploration etc is done commonly during the weekends when the users aren't working.*
+     - *The notion of riding during the weekends not for work related engagements but for relaxation,exploring,leisure proves true even with annual members as their average ride time also peaks during the weekend when they're likely not working.*
+    
+
+4. **Which customer demographic dominates daily ridership volume?**     
+    *🔍Methodology*
+    - *Filtered out rides exceeding 24 hours (> 1440 minutes) and those rides that had ride length less than 1 minute*
+    - *Extracted the hour from the started_at column as ride_hour*
+    - *Filtered for specific hours during the day relevant to the question*
+    - *Ordered the results by the the number of rides*
+   
+   ```sql
+   SELECT
+    EXTRACT(HOUR FROM started_at) AS ride_hour,
+    member_casual AS rider_type,
+    COUNT(ride_id) AS total_rides
+   FROM trips_2025
+   WHERE
+       is_system_timeout != TRUE
+       AND EXTRACT(HOUR FROM started_at) IN (6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22)
+       AND ride_length > 1
+   GROUP BY
+       ride_hour,rider_type
+   ORDER BY
+       total_rides DESC
+   ```
+     *📊Key Metrics*    
+      - *Members take more rides during the specific hours (6am - 10am) and (3pm - 8pm) than casual riders*   
+      - *For hours such as 7am, 8 am members take twice as many rides as casual riders*   
+      - *For the hours of (4,5,6 pm), the late hours of the afternoon, members take between 290,000 to almost 400,000 rides while casual riders take between 150,000 to 180,000 rides*   
+
+    *💡Data Interpretation & Business Takeaway*
+     - *There is an increased number of member riders in general compared to casual riders. The surge in bike ride traffic during these hours for member riders is a result of the riders going and coming from work.*
+     - *Casual riders do take rides during those hours as well but the number varies quite a lot in comparison to the members.*
+
+  5. **What are the peak operational months for Cyclistic, segmented by user type?**
+     
+     *🔍Methodology*   
+     - *Filtered out rides exceeding 24 hours (> 1440 minutes) and those rides that had ride length less than 1 minute*  
+     - *Calculated the total rides taken using COUNT() aggregation* 
+     - *Used CASE statement to create a column containing the names for months of the year*
+     - *Ordered the results by the ride count*
+     - *Grouped the results by month and rider status (member or casual)*
+           
+     ```sql
+      SELECT 
+      member_casual AS rider_status,
+      EXTRACT(MONTH FROM started_at) AS month_date,
+      CASE 
+          WHEN EXTRACT(MONTH FROM started_at)::INTEGER = 1 THEN 'January'
+          WHEN EXTRACT(MONTH FROM started_at)::INTEGER = 2 THEN 'February'
+          WHEN EXTRACT(MONTH FROM started_at)::INTEGER = 3 THEN 'March'
+          WHEN EXTRACT(MONTH FROM started_at)::INTEGER = 4 THEN 'April'
+          WHEN EXTRACT(MONTH FROM started_at)::INTEGER = 5 THEN  'May'
+          WHEN EXTRACT(MONTH FROM started_at)::INTEGER = 6 THEN 'June'
+          WHEN EXTRACT(MONTH FROM started_at)::INTEGER = 7 THEN 'July'
+          WHEN EXTRACT(MONTH FROM started_at)::INTEGER = 8 THEN 'August'
+          WHEN EXTRACT(MONTH FROM started_at)::INTEGER = 9 THEN 'September'
+          WHEN EXTRACT(MONTH FROM started_at)::INTEGER = 10 THEN 'October'
+          WHEN EXTRACT(MONTH FROM started_at)::INTEGER = 11 THEN 'November'
+          ELSE 'December'
+      END AS months,
+      COUNT(ride_id)AS ride_count
+      FROM trips_2025
+      WHERE   
+          is_system_timeout != TRUE -- Filter out the system docked bikes
+          AND ride_length > 1 -- Filter out redoced after one minute rides
+      GROUP BY
+          month_date, member_casual 
+      ORDER BY
+          ride_count DESC
+        ```
+     
+     *📊Key Metrics* 
+     - *For both casual and member riders the months of June - September are the most popular for bike riding*
+  
+  
+     *💡Data Interpretation & Business Takeaway*
+     - *The popularity for bike riding during the months from June to September is because in the US or the Northern hemisphere, these are summer months or warmer months of the year and this makes bike riding much more enjoyable and a popular choice*
+    
+  6. **What is the distribution of fleet preferences across annual members and casual riders?**
+
+     *🔍Methodology*
+     - *Filtered out rides exceeding 24 hours (> 1440 minutes) and those rides that had ride length less than 1 minute*
+     - *Counted the number of bikes* 
+     - *Grouped the data by rider type and the bike type*
+     - *Ordered the results by the average ride length*
+    
+     ```sql
+      SELECT
+      member_casual AS rider_status,
+      COUNT(rideable_type) AS bike_type_sum,
+      rideable_type
+      FROM
+          trips_2025
+      WHERE
+          is_system_timeout != TRUE AND
+          ride_length > 1
+      GROUP BY
+          member_casual, rideable_type
+      ORDER BY
+          bike_type_sum DESC
+     ```
+
+     *📊Key Metrics*
+     - *Annual members ride the bikes much more frequently and as such the count for them is higher but for both the casual riders and the members, electric bikes are the most frequently used compared to classic bikes.*
+ 
+     *💡Data Interpretation & Business Takeaway*
+     - *For both the members and the casual riders, electric bikes are the most popular mode of transportation likely due to the ease and convenience of riding of the e-bikes. E-bikes don't require manual pedalling and stamina like classic bikes and that might lead users to prefer them as a mode of movement.*
+    
+ 7. **Which specific docking stations serve as the primary departure hubs for annual members versus casual riders?**     
+
+     *🔍Methodology*  
+      - *Filtered out rides exceeding 24 hours (> 1440 minutes) and those rides that had ride length less than 1 minute*
+      - *Counted the number of bike rides*
+      - *Grouped the data by station name and the rider type*
+      - *Ordered the results by the ride count*
+      - *Limited the results to the top ten stattions*
+
+     ```sql
+      SELECT
+    start_station_name,
+    COUNT(ride_id) AS ride_count,
+    member_casual AS rider_type
+    FROM
+        trips_2025
+    WHERE
+        is_system_timeout != TRUE
+        AND ride_length > 1 
+        AND start_station_name IS NOT NULL  -- This filters out 20% start station data values as they are nulls 
+    GROUP BY
+        start_station_name, rider_type
+    ORDER BY
+        ride_count DESC
+    LIMIT
+        10
+     ```
+     *📊Key Metrics*
+     - *The analysis shows the top ten sations, and in the result "DuSable Lake Shore Dr & Monroe st" and "Kingsbury St & Kinzie St" are the popularly used stations for casual riders and annual members respectively.*
+
+    *💡Data Interpretation & Business Takeaway*
+     - *For the Casual rider , the station "DuSable Lake Shore Dr & Monroe St" is the most popular station as it is connected to a number of tourist attractions and leisure establishments within the area luring in the casual riders*
+    - *For the annual members "Kingsbury St & Kinzie St" is the place to be as it sees quite a number of the members take off from its docking area. This is likely because it is located right in a dense hub of tech headquarters and transit connections, as well as busy office buildings buzzing with workers who commute there daily using the bikes.*
+        
+        
+     
+
   - ## Data Audit and Quality assurance with Python
   - ## Visualizations in Tableau
  # 📚 What I learned
