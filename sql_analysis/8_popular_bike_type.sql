@@ -1,5 +1,5 @@
 --Question
--- Among casual riders, members , what is the most popular bike type 
+-- What is the distribution of bike fleet preferences across annual members and casual riders?
 
 SELECT
     member_casual AS rider_status,
@@ -18,7 +18,7 @@ ORDER BY
 /*
    Summary
   
- 🔍Methodology & Volume
+ 🔍Methodology
     - Filtered out rides exceeding 24 hours (> 1440 minutes) and those rides that had ride length less than 1 minute
     - Counted the number of bikes 
     - Grouped the data by rider type and the bike type

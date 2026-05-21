@@ -1,5 +1,5 @@
 -- Question
--- What is the most popular day or days for the casual vs the annual members?
+-- Which day or days of the week exhibit peak ridership volume when contrasting annual members against casual riders?
 
 
 SELECT
@@ -20,7 +20,7 @@ ORDER BY
 /*
    Summary
   
- 🔍Methodology & Volume
+ 🔍Methodology
     - Filtered out rides exceeding 24 hours ( > 1440 minutes) and those rides that had ride length less than 1 minute
     - Calculated using aggregation method COUNT, the number of rides taken during the 7 days of the week.
     - Grouped the results by day of the week and the rider type(member or casual)

@@ -1,5 +1,5 @@
 -- Question
--- Which station is most preferred by casual riders and which is preferred by members
+-- Which specific docking stations serve as the primary docking and departure hubs for annual members versus casual riders?
 
 
 SELECT
@@ -26,7 +26,7 @@ N.B For station-based analysis, 20% of entries were excluded due to missing stat
  
    Summary
   
- 🔍Methodology & Volume
+ 🔍Methodology
     - Filtered out rides exceeding 24 hours (> 1440 minutes) and those rides that had ride length less than 1 minute
     - Counted the number of bike rides
     - Grouped the data by station name and the rider type
@@ -34,7 +34,7 @@ N.B For station-based analysis, 20% of entries were excluded due to missing stat
     - Limited the results to the top ten stattions
  📊Key Metrics 
     - The analysis shows the top ten sations, and in the result "DuSable Lake Shore Dr & Monroe st" and "Kingsbury St & Kinzie St" are the popularly used
-      sattions for casual riders and annual members respectively
+      stations for casual riders and annual members respectively
 
  💡Data Interpretation & Business Takeaway
   -For the Casual rider , the station "DuSable Lake Shore Dr & Monroe St" is the most popular station as 

@@ -21,7 +21,7 @@ GROUP BY
 /*
   Summary
   
- 🔍Methodology & Volume
+ 🔍Methodology
     - Filtered for rides exceeding 24 hours (> 1440 minutes) 
     - Counted the number of ride logs
     - Counted all data contained in the end_station_name column

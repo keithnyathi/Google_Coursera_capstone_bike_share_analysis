@@ -1,5 +1,5 @@
 -- Question
--- What is the average ride length between casual riders and member riders?
+-- What is the variance in average trip duration when contrasting annual members against casual riders?
 
 SELECT
     ROUND(AVG(ride_length),2) AS average_ride_length,
@@ -19,7 +19,7 @@ ORDER BY
 /*
    Summary
   
- 🔍Methodology & Volume
+ 🔍Methodology
     - Filtered out rides exceeding 24 hours (> 1440 minutes) and those rides that had ride length less than 1 minute
     - Calculated the average ride length grouped by member type 
     - Ordered the results by the average ride length

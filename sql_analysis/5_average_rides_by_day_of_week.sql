@@ -1,5 +1,5 @@
 -- Question
--- What is the average ride_length by day of the week
+-- How do mean trip durations fluctuate across the days of the week when comparing annual members and casual riders?
 
 SELECT
     ROUND(AVG(ride_length),2) AS Average_ride_time,
@@ -19,7 +19,7 @@ ORDER BY
 /*
    Summary
   
- 🔍Methodology & Volume
+ 🔍Methodology
     - Filtered out rides exceeding 24 hours (> 1440 minutes) and those rides that had ride length less than 1 minute
     - Calculated the average ride length grouped by member type and weekday
     - Ordered the results by the average ride length in descending order

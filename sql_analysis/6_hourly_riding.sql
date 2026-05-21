@@ -1,5 +1,5 @@
 -- Question
--- Which of the riders casual or member ride the most during the day ?
+-- Which customer demographic dominates daily ridership volume?
 -- At what hours of the day do the riders (filtered by type) ride their bikes?
 
 SELECT
@@ -19,7 +19,7 @@ ORDER BY
 /*
    Summary
   
- 🔍Methodology & Volume
+ 🔍Methodology
     - Filtered out rides exceeding 24 hours (> 1440 minutes) and those rides that had ride length less than 1 minute
     - Extracted the hour from the started_at column as ride_hour
     - Filtered for specific hours during the day relevant to the question
