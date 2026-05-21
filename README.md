@@ -397,7 +397,71 @@ To unlock these conversions, this end-to-end case study analyzes **5.7+ million 
       *Visualization created in Tableau*
         
       [*For the detailed sql code files, you can find them here*](sql_analysis)
-  - ## Data Audit and Quality assurance with Python
-  - ## Visualizations in Tableau
+      
+  - ## Data Audit and Quality assurance with Python in Jupyter Notebooks
+    
+     - During the exploratory phase via SQL and Excel, a massive subset of $152,709$ rows exhibited profound systemic anomalies. To protect the integrity of my  analysis, I isolated and investigated the cause of these values across three distinct operational failure modes:
+          - **Systemic Timeouts:** Trips exceeding 24 hours ($\ge 1440$ minutes).
+          - **Hardware Friction & False Starts:** Trips lasting less than 1 minute ($< 1$ minute).
+          - **Chronological Artifacts:** Trips featuring negative durations ($< 0$ minutes) caused by external time shifts.
+            
+    1. ### Systemic Timeouts: Trips exceeding 24 hours
+       - 🔍 Methodology & Volume      
+Filtered for active rides exceeding 24 hours ($\ge 1440$ minutes). Out of the total audited error pool, **5,585 records** fall into this category. Closer inspection revealed that these rows universally lacked end-station coordinates and names.
+ 
+       - 📊 Key Metrics & Demographics
+          - **Casual Riders:** 4,677 rides (**83.74%** of timeouts)
+          - **Annual Members:** 908 rides (**16.26%** of timeouts)
+          - **Equipment Attribution:** 5,585 rides (**100% Classic Bikes**, 0% Electric)
+
+       - 💡 Data Interpretation & Business Takeaway
+          - The extreme 5:1 skew toward casual riders points to user unfamiliarity with the physical docking mechanism. Casual riders likely abandon bikes or fail to push the bike firmly into the slot to trigger a secure lock event. 
+
+          - Crucially, **100% of these occurrences involved classic bikes**. Because electric bikes utilize digital, app-driven locking systems, this pattern reveals a hardware vulnerability or user interface gap isolated specifically to the manual, mechanical docking stations utilized by classic bikes. These 5,585 sessions represent incomplete consumer experiences and system-enforced timeouts, requiring total exclusion from final trip-length metrics.
+        
+            <Figure size 900x600 with 1 Axes><img width="879" height="584" alt="image" src="https://github.com/user-attachments/assets/05024f75-6320-4f6f-a042-427fb9fa552a" />  
+             
+            *Visualization created using Python's Matplotlib and Seaborn library*
+
+        
+    2. ### Hardware Friction & False Starts: Trips lasting less than 1 minute
+       
+       - 🔍 Methodology & Volume   
+Filtered for trips that registered durations of less than 60 seconds ($< 1$ minute). This represents the largest source of data corruption in the dataset, accounting for **147,124 rows**.
+
+       - 📊 Key Metrics & Attribution   
+           - **Equipment Concentration:** 147,112 rides (**99.99% Electric Bikes**)
+           - **Classic Bike Prevalance:** 12 rides (**0.01%**)
+
+       - 💡 Data Interpretation & Business Takeaway   
+            - An overwhelming **99.99%** of sub-one-minute re-docking events are concentrated within the electric bike fleet. This indicates a physical or digital product failure mode unique to e-bikes:      
+                1. **Low Battery Triggers:** Users unlock an electric bike, notice a low or depleted battery on the console, and immediately re-dock it to select another.
+                2. **App-to-Lock Miscommunications:** System logging registers a trip creation timestamp, but the physical locking pin on the e-bike fails to retract, forcing the user to cancel or end the ride instantly.
+                   
+       
+             
+            - Because these data points capture hardware friction rather than actual user utility or travel behavior, retaining them would aggressively drag down overall average ride lengths. They are filtered out to protect the integrity of true consumer trip behaviors.
+      
+              <Figure size 700x700 with 1 Axes><img width="621" height="683" alt="image" src="https://github.com/user-attachments/assets/39d01860-f5fc-4e6b-937c-ca62c7af6558" />     
+       
+                *Visualization created using Python's Matplotlib and Seaborn library*
+        
+        
+      4. ### Chronological Artifacts (Daylight Saving Time Overlaps)    
+         - 🔍 Methodology & Volume     
+            - Isolated anomalies where the computed trip duration was less than zero ($< 0$), meaning the recorded `started_at` timestamp occurred chronologically *after* the `ended_at` timestamp. This criteria exposed exactly **29 records**.
+
+         - 📊 Key Metrics & Cross-Section      
+             - **Temporal Congruence:** 100% of these 29 records occurred on **Sunday, November 2, 2025**, between **01:00 AM and 02:00 AM**.
+             - **Fleet Split:** 12 Classic Bikes, 17 Electric Bikes.
+
+         - 💡 Data Interpretation & Business Takeaway     
+             - This is a classic timestamp artifact rather than a user error or hardware failure. On the first Sunday of November, the regional municipal clock terminates Daylight Saving Time (DST) at 02:00 AM, falling back exactly one hour to 01:00 AM. 
+
+             - Trips that began prior to the shift but concluded immediately following the time adjustment resulted in negative values because the local wall-clock time moved backward by 60 minutes mid-ride. While easily correctable by adding an offset of 60 minutes, these 29 records represent an infinitesimal fraction of the dataset and are completely pruned to maintain a pure, unmanipulated chronological timeline. 
+          
+           [To view the full Python Jupyter Notebook, click here](python_analysis_code/Python_Data_Quality_Audit.ipynb)
+        
+    
  # 📚 What I learned
  # 🔐 Conclusions
